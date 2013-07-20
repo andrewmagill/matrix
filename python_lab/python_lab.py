@@ -1,43 +1,43 @@
 ## Task 1
-minutes_in_week = ...
+minutes_in_week = 10080 
 
 ## Task 2
-remainder_without_mod = ...
+remainder_without_mod = 2304811 - 2304811 // 47 * 47 
 
 ## Task 3
-divisible_by_3 = ...
+divisible_by_3 = ((673 + 909) % 3) == 0
 
 ## Task 4
 x = -9
 y = 1/2
-statement_val = ...
+statement_val = 1.0 
 
 ## Task 5
-first_five_squares = { ... for _ in {1,2,3,4,5} }
+first_five_squares = { x**2 for x in {1,2,3,4,5} }
 
 ## Task 6
-first_five_pows_two = { ... for _ in {0,1,2,3,4} }
+first_five_pows_two = { 2**x for x in {0,1,2,3,4} }
 
 ## Task 7: enter in the two new sets
-X1 = { ..., ..., ... }
-Y1 = { ..., ..., ... }
+X1 = { 1, 2, 4 }
+Y1 = { 2, 3, 5 }
 
 ## Task 8: enter in the two new sets
-X2 = { ..., ..., ... }
-Y2 = { ..., ..., ... }
+X2 = { 0,3,6 }
+Y2 = { 1,2,4 }
 
 ## Task 9
 base = 10
 digits = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
-three_digits_set = { ... }
+three_digits_set = {x*base**0 + y*base**1 + z*base**2 for x in digits for y in digits for z in digits}
 
 ## Task 10
 S = {1, 2, 3, 4}
 T = {3, 4, 5, 6}
-S_intersect_T = { ... }
+S_intersect_T = { x for x in S if x in T }
 
 ## Task 11
-L_average = ... # average of: [20, 10, 15, 75]
+L_average = sum([20, 10, 15, 75])/len([20,10,15,75])
 
 ## Task 12
 LofL = [[.25, .75, .1], [-1, 0], [4, 4, 4, 4]]
@@ -48,7 +48,7 @@ cartesian_product = ... # use form: [ ... {'A','B','C'} ... {1,2,3} ... ]
 
 ## Task 14
 S = {-4, -2, 1, 2, 5, 0}
-zero_sum_list = [ ... ] 
+zero_sum_list = [ (i,j,k) for i in S for j in S for k in S if i+j+k == 0 ] 
 
 ## Task 15
 exclude_zero_list = [ ... ]
