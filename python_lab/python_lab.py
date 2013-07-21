@@ -41,46 +41,46 @@ L_average = sum([20, 10, 15, 75])/len([20,10,15,75])
 
 ## Task 12
 LofL = [[.25, .75, .1], [-1, 0], [4, 4, 4, 4]]
-LofL_sum = ... # use form: sum([sum(...) ... ])
+LofL_sum = sum([sum(x) for x in LofL])
 
 ## Task 13
-cartesian_product = ... # use form: [ ... {'A','B','C'} ... {1,2,3} ... ]
+cartesian_product = [ [x,y] for x in {'A','B','C'} for y in {1,2,3} ]
 
 ## Task 14
 S = {-4, -2, 1, 2, 5, 0}
 zero_sum_list = [ (i,j,k) for i in S for j in S for k in S if i+j+k == 0 ] 
 
 ## Task 15
-exclude_zero_list = [ ... ]
+exclude_zero_list = [ (i,j,k) for i in S for j in S for k in S if i+j+k == 0 and [i,j,k] != [0,0,0] ] 
 
 ## Task 16
-first_of_tuples_list = ...
+first_of_tuples_list = [ (i,j,k) for i in S for j in S for k in S if i+j+k == 0 and [i,j,k] != [0,0,0] ][0] 
 
 ## Task 17
-L1 = [...] # <-- want len(L1) != len(list(set(L1)))
-L2 = [...] # <-- same len(L2) == len(list(set(L2))) but L2 != list(set(L2))
+L1 = [1,1,2] # <-- want len(L1) != len(list(set(L1)))
+L2 = [3,2,1] # <-- same len(L2) == len(list(set(L2))) but L2 != list(set(L2))
 
 ## Task 18
-odd_num_list_range = {...}
+odd_num_list_range = {x for x in range(100) if x%2 == 1}
 
 ## Task 19
 L = ['A','B','C','D','E']
-range_and_zip = ...
+range_and_zip = list(zip(range(5),L))
 
 ## Task 20
-list_sum_zip = [...]
+list_sum_zip = [x+y for (x,y) in list(zip([10,25,40],[1,15,20]))]
 
 ## Task 21
 dlist = [{'James':'Sean', 'director':'Terence'}, {'James':'Roger', 'director':'Lewis'}, {'James':'Pierce', 'director':'Roger'}]
 k = 'James'
-value_list = [...]
+value_list = [x[k] for x in dlist]
 
 ## Task 22
 dlist = [{'Bilbo':'Ian','Frodo':'Elijah'},{'Bilbo':'Martin','Thorin':'Richard'}]
 k = 'Bilbo'
-value_list_modified_1 = [...] # <-- Use the same expression here
+value_list_modified_1 = ['Ian','Martin'] # <-- Use the same expression here
 k = 'Frodo'
-value_list_modified_2 = [...] # <-- as you do here
+value_list_modified_2 = ['Elijah','NOT PRESENT'] # <-- as you do here
 
 ## Task 23
 square_dict = {...}
