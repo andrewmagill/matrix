@@ -23,13 +23,13 @@ def makeInverseIndex(strlist):
       or stories_big.txt included in the download.
     """
     inverseIndex = {}
-    for (i,str) in enumerate(strlist):
-        terms = str.split()
+    for (i,s) in enumerate(strlist):
+        terms = s.split()
         for term in terms:
             if term in inverseIndex:
-                inversindex[term].add(i)
-            else:
                 inverseIndex[term].add(i)
+            else:
+                inverseIndex[term] = {i}
     return inverseIndex
 
 ## Task 5
@@ -38,7 +38,12 @@ def orSearch(inverseIndex, query):
     Input: an inverse index, as created by makeInverseIndex, and a list of words to query
     Output: the set of document ids that contain _any_ of the specified words
     """
-    return set.union(*[inverseIndex[q] for q in query if q in inverseIndex])
+    result = set()
+    for term in query:
+        if term in inverseIndex:
+            for index in inverseIndex[term]:
+                result.add(index)
+    return result
 
 ## Task 6
 def andSearch(inverseIndex, query):
@@ -46,4 +51,10 @@ def andSearch(inverseIndex, query):
     Input: an inverse index, as created by makeInverseIndex, and a list of words to query
     Output: the set of all document ids that contain _all_ of the specified words
     """
-    return set.intersection(*[inverseIndex[q] for q in query if q in inverseIndex]) 
+    intermediate = []
+    result = set()
+    for term in query:
+        if term in inverseIndex:
+            intermediate.append(inverseIndex[term])
+        result = set.intersection(*(set(x) for x in intermediate))
+    return result
