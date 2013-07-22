@@ -154,6 +154,7 @@ def submit():
 
 def loginPrompt():
     """Prompt the user for login credentials. Returns a tuple (login, password)."""
+    """
     if 'COURSERA_EMAIL' in os.environ:
         login = os.environ['COURSERA_EMAIL']
     else:
@@ -164,6 +165,8 @@ def loginPrompt():
     else:
         password = input("One-time password from the assignment page (NOT your own account\'s password): ")
     return login, password
+    """
+    return "andrew.b.magill@gmail.com","Zg8gQEbWE2" 
 
 def partPrompt():
     print('These are the assignment parts that you can submit:\n')
