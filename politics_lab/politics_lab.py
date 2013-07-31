@@ -28,7 +28,15 @@ def create_voting_dict():
 
     The lists for each senator should preserve the order listed in voting data. 
     """
-    return dict() 
+    voting_dict = {}
+    for row in voting_data:
+      columns = row.split(' ')
+      senator = columns[0]
+      affiliation = columns[1]
+      state = columns[2]
+      record = [int(x) for x in columns[3:len(columns)]]
+      voting_dict[senator] = record
+    return voting_dict
     
 
 ## Task 2
@@ -44,7 +52,9 @@ def policy_compare(sen_a, sen_b, voting_dict):
         >>> policy_compare('Fox-Epstein','Ravella', voting_dict)
         -2
     """
-    return 0.0
+    u = voting_dict[sen_a]
+    v = voting_dict[sen_b]
+    return sum([u[i]*v[i] for i in range(len(u))])
 
 
 ## Task 3
@@ -63,8 +73,12 @@ def most_similar(sen, voting_dict):
 
     Note that you can (and are encouraged to) re-use you policy_compare procedure.
     """
-    
-    return ""
+    senators = voting_dict.keys()
+    likeness = []
+    for comp_sen in senators:
+      if comp_sen != sen:
+        likeness.append((comp_sen, policy_compare(sen, comp_sen, voting_dict)))
+    return sorted(likeness,key=lambda x: -x[1])[0][0]
     
 
 ## Task 4
@@ -80,14 +94,19 @@ def least_similar(sen, voting_dict):
         >>> least_similar('Klein', vd)
         'Ravella'
     """
-    return ""
+    senators = voting_dict.keys()
+    likeness = []
+    for comp_sen in senators:
+      if comp_sen != sen:
+        likeness.append((comp_sen, policy_compare(sen, comp_sen, voting_dict)))
+    return sorted(likeness,key=lambda x: x[1])[0][0]
     
     
 
 ## Task 5
 
-most_like_chafee    = ''
-least_like_santorum = '' 
+most_like_chafee    = most_similar('Chafee',create_voting_dict())
+least_like_santorum =  least_similar('Santorum',create_voting_dict())
 
 
 
@@ -102,7 +121,11 @@ def find_average_similarity(sen, sen_set, voting_dict):
         >>> find_average_similarity('Klein', {'Fox-Epstein','Ravella'}, vd)
         -0.5
     """
-    return ...
+    likeness_list = []
+    for comp_sen in sen_set:
+      if comp_sen != sen:
+        likeness_list.append(policy_compare(sen, comp_sen, voting_dict))
+    return sum(likeness_list)/len(likeness_list)
 
 most_average_Democrat = ... # give the last name (or code that computes the last name)
 
