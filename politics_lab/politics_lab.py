@@ -1,4 +1,19 @@
+import sys
+import os
+
 voting_data = list(open("voting_record_dump109.txt"))
+
+def create_affiliation_dict():
+    affiliation_dict = {}
+    for row in voting_data:
+      columns = row.split(' ')
+      senator = columns[0]
+      affiliation = columns[1]
+      if affiliation in affiliation_dict:
+        affiliation_dict[affiliation].append(senator)
+      else:
+        affiliation_dict[affiliation] = [senator]
+    return affiliation_dict
 
 ## Task 1
 
@@ -105,10 +120,9 @@ def least_similar(sen, voting_dict):
 
 ## Task 5
 
-most_like_chafee    = most_similar('Chafee',create_voting_dict())
-least_like_santorum =  least_similar('Santorum',create_voting_dict())
-
-
+voting_dict = create_voting_dict()
+most_like_chafee    = most_similar('Chafee',voting_dict)
+least_like_santorum =  least_similar('Santorum',voting_dict)
 
 # Task 6
 
@@ -127,8 +141,15 @@ def find_average_similarity(sen, sen_set, voting_dict):
         likeness_list.append(policy_compare(sen, comp_sen, voting_dict))
     return sum(likeness_list)/len(likeness_list)
 
-most_average_Democrat = ... # give the last name (or code that computes the last name)
+democrats = create_affiliation_dict()['D']
+dem_set = {sen for sen in democrats}
 
+avg_sim_by_sen = []
+for dem in dem_set:
+  avg = find_average_similarity(dem,dem_set,voting_dict)
+  avg_sim_by_sen.append((dem,avg))
+
+most_average_Democrat = sorted(avg_sim_by_sen,key=lambda x: -x[1])[0][0] # give the last name (or code that computes the last name)
 
 # Task 7
 
@@ -142,10 +163,18 @@ def find_average_record(sen_set, voting_dict):
         >>> find_average_record({'Fox-Epstein','Ravella'}, voting_dict)
         [-0.5, -0.5, 0.0]
     """
-    return ...
+    sum_rec = []
+    avg_rec = []
+    for sen in sen_set:
+      sen_rec = voting_dict[sen]
+      if len(sum_rec) == 0:
+        sum_rec = sen_rec
+      else:
+        sum_rec = [sum_rec[i]+sen_rec[i] for i in range(len(sen_rec))]
+    avg_rec = [v/len(sen_set) for v in sum_rec]
+    return avg_rec 
 
-average_Democrat_record = ... # (give the vector)
-
+average_Democrat_record = find_average_record(dem_set, voting_dict) # (give the vector)
 
 # Task 8
 
@@ -160,5 +189,19 @@ def bitter_rivals(voting_dict):
         >>> bitter_rivals(voting_dict)
         ('Fox-Epstein', 'Ravella')
     """
-    return (..., ...)
+    comp_dict = {}
+    senators = voting_dict.keys()
+    for sen_a in senators:
+      for sen_b in senators:
+        if sen_a != sen_b:
+          if (sen_b,sen_a) not in comp_dict:
+            comp_dict[(sen_a,sen_b)] = policy_compare(sen_a, sen_b, voting_dict)
+
+    #this is ugly
+    comp_list = []
+    for key in comp_dict:
+      comp_list.append([key,comp_dict[key]])
+    sorted_comp_list = sorted(comp_list, key = lambda x: x[1])
+
+    return sorted_comp_list[0][0]
 
